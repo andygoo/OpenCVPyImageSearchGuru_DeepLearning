@@ -10,7 +10,8 @@
 import os
 # from week1a import imread_lesson as imLesson1
 # from week1a import drawing_lesson as dl1
-from week1a import ImageProcessingOperations_lesson as imOp
+# from week1a import ImageProcessingOperations_lesson as imOp
+from week1a import MorphologicalOp as mp
 
 __author__ = 'kishwarkumar'
 __date__ = '7/2/16' '6:43 PM'
@@ -34,15 +35,24 @@ if __name__ == "__main__":
     dlObj.drawit()
     '''
 
+    '''
     # declare object, update path, call for different operations
     imOpObj = imOp.ImageProcessingOperations_lesson(CurrPath + "/week1a/images/image9.png")
-    #imOpObj.translationOp()
-    #imOpObj.rotationOp()
-    #imOpObj.resizingOp()
-    #imOpObj.flippingOp()
-    #imOpObj.croppingOp()
-    #imOpObj.arithmeticOp()
-    #imOpObj.bitwiseOp()
-    #imOpObj.maskingOp()
+    imOpObj.translationOp()
+    imOpObj.rotationOp()
+    imOpObj.resizingOp()
+    imOpObj.flippingOp()
+    imOpObj.croppingOp()
+    imOpObj.arithmeticOp()
+    imOpObj.bitwiseOp()
+    imOpObj.maskingOp()
     imOpObj.splitmergeOp()
-
+    '''
+    # declare object, update path, call for different operations
+    imOpObj = mp.MorphologicalOp(CurrPath + "/week1a/images/image10.png")
+    imOpObj.ErodeOp()
+    #imOpObj.DiluteOp()
+    #imOpObj.OpenOp()
+    #imOpObj.ClosingOp()
+    #imOpObj.Gradient()
+    #imOpObj.WhiteHat()
