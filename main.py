@@ -13,7 +13,9 @@ import os
 # from week1a import ImageProcessingOperations_lesson as imOp
 # from week1a import MorphologicalOp as mp
 # from week1a import SmoothAndBlur as sb
-from week1a import Thresholding as th
+# from week1a import Thresholding as th
+# from week1a import Gradient as gr
+from week1a import Edge as edg
 
 __author__ = 'kishwarkumar'
 __date__ = '7/2/16' '6:43 PM'
@@ -39,8 +41,8 @@ if __name__ == "__main__":
 
     '''
     # declare object, update path, call for different operations
-    imOpObj = imOp.ImageProcessingOperations_lesson(CurrPath + "/week1a/images/image9.png")
-    imOpObj.translationOp()
+    imOpObj = imOp.ImageProcessingOperations_lesson(CurrPath + "/week1a/images/image23.png")
+    #imOpObj.translationOp()
     imOpObj.rotationOp()
     imOpObj.resizingOp()
     imOpObj.flippingOp()
@@ -71,8 +73,21 @@ if __name__ == "__main__":
     imOpObj.Blurbil()
     '''
 
+    '''
     # declare object, update path, call for different operations
     imOpObj = th.Thresholding(CurrPath + "/week1a/images/image17.png")
     imOpObj.Simple_Thresholding()
-    #imOpObj.Otsu_Thresholding()
-    #imOpObj.Adaptive_Thresholding()
+    imOpObj.Otsu_Thresholding()
+    imOpObj.Adaptive_Thresholding()
+    '''
+
+    '''
+    # declare object, update path, call for different operations
+    imOpObj = gr.Gradient(CurrPath + "/week1a/images/image19.png")
+    imOpObj.Gradient_Sobel()
+    '''
+
+    # declare object, update path, call for different operations
+    imOpObj = edg.Edge(CurrPath + "/week1a/images/image25.jpg")
+    #imOpObj.Edge_Canny()
+    imOpObj.Edge_Canny_auto()

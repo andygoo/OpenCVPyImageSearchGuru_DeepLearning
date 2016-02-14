@@ -57,7 +57,6 @@ class ImageProcessingOperations_lesson:
     def rotationOp(self):
         # read image
         im = cv2.imread(self.Image)
-
         # grab the dimension of the image
         (h, w) = im.shape[:2]
         (cX, cY) = (w/2, h/2)
@@ -90,7 +89,6 @@ class ImageProcessingOperations_lesson:
         (b, g, r) = rotated[10, 10]
         print("red=%d, green=%d, blue=%d" % (r,g,b))
         cv2.waitKey(0)
-
         return
 
     # Resizing
