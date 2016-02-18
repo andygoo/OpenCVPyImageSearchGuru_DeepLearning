@@ -15,7 +15,8 @@ import os
 # from week1a import SmoothAndBlur as sb
 # from week1a import Thresholding as th
 # from week1a import Gradient as gr
-from week1a import Edge as edg
+# from week1a import Edge as edg
+from week1a import Contour as ctr
 
 __author__ = 'kishwarkumar'
 __date__ = '7/2/16' '6:43 PM'
@@ -87,7 +88,16 @@ if __name__ == "__main__":
     imOpObj.Gradient_Sobel()
     '''
 
+    '''
     # declare object, update path, call for different operations
     imOpObj = edg.Edge(CurrPath + "/week1a/images/image25.jpg")
-    #imOpObj.Edge_Canny()
+    imOpObj.Edge_Canny()
     imOpObj.Edge_Canny_auto()
+    '''
+
+    # declare object, update path, call for different operations
+    imOpObj = ctr.Contour(CurrPath + "/week1a/images/image30.png")
+    # imOpObj.ContourOp()
+    # imOpObj.ContourMomentsAndArea()
+    # imOpObj.ShapeIt()
+    imOpObj.ContourApprox()
