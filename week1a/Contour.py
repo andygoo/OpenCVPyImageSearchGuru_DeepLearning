@@ -313,3 +313,130 @@ class Contour:
         # show the output image
         cv2.imshow("Sorted", im)
         cv2.waitKey(0)
+
+    # Contour Advance properties
+    def ContourIdentifyTicTacToe(self):
+        # read image
+        im = cv2.imread(self.Image)
+        gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+
+        # lets find all the contours on board
+        (cnts, _) = cv2.findContours(gray.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        # lets loop over contours
+        for (i, c) in enumerate(cnts):
+            # compute the area of the contour along with the bounding box
+            #  to compute the aspect ratio
+            area = cv2.contourArea(c)
+            (x, y, w, h) = cv2.boundingRect(c)
+
+            # compute the convex hull of the contour, then use the area of original
+            # contour and the area of contour hull to compute the solidity
+            hull = cv2.convexHull(c)
+            hullArea = cv2.contourArea(hull)
+            solidity = area / float(hullArea)
+
+            # initialize the character text
+            char = "?"
+
+            # if the solidity is high we are examing an "O"
+            if solidity > 0.9:
+                char = "O"
+
+            # otherwise, if the solidity is still reasonable high, we are examing "X"
+            elif solidity > 0.5:
+                char = "X"
+
+            # if the character is not unknown, draw it
+            if char != "?":
+                cv2.drawContours(im, [c], -1, (0, 255, 0), 3)
+                cv2.putText(im, char, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 1.25,
+                                (0, 255, 0), 4)
+
+            # show the contour properties
+            print "%s (Contour #%d) -- Solidity=%.2f" % (char, i+1, solidity)
+
+        # show the output image
+        cv2.imshow("Output", im)
+        cv2.waitKey(0)
+
+
+    def ContourTetricBlock(self):
+        # read image
+        im = cv2.imread(self.Image)
+        gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+        thresh = cv2.threshold(gray, 225, 255, cv2.THRESH_BINARY_INV)[1]
+
+        # show the original and thresholded image
+        cv2.imshow("Original", im)
+        cv2.imshow("Thresh", thresh)
+
+        # find external contour in the thresholded image and allocate memory
+        # for the convex hull image
+        (cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                                     cv2.CHAIN_APPROX_SIMPLE)
+        hullImage = np.zeros(gray.shape[:2], dtype="uint8")
+
+        # loop over the contours
+        for (i, c) in enumerate(cnts):
+            # compute the area of the contour along with the bounding box
+            # to compute the aspect ratio
+            #### aspect ratio = Image width / Image Height
+            area = cv2.contourArea(c)
+            (x, y, w, h) = cv2.boundingRect(c)
+
+            # compute the aspect ration of the contour which is simple the width
+            # divided by the height of the bounding box
+            aspectRatio = w / float(h)
+
+            # use the area of the contour and the bounding box area to compute
+            # the extent
+            #### extent = shape area / bounding box area
+            #### bounding box area = bounding box width x bounding box hieight
+            extent = area / float(w * h)
+
+            # compute the convex hull of the contour, then use the area of the
+            # original contour and the area of the convex hull to compute the
+            # solidity
+            #### solidity = contour area / convex hull area
+            hull = cv2.convexHull(c)
+            hullArea = cv2.contourArea(hull)
+            solidity = area / float(hullArea)
+
+            # visualize the original contours and the convex hull and initialize
+            # the name of the shape
+            cv2.drawContours(hullImage, [hull], -1, 255, -1)
+            cv2.drawContours(im, [c], -1, (240, 0, 159), 3)
+            shape = ""
+
+            # if the aspect ratio is approximately 1 then the shape is square
+            if aspectRatio >= 0.98 and aspectRatio  < 1.02:
+                shape = "Square"
+
+            # if the width is 3x larger than the height then we have a rectangle
+            elif aspectRatio >= 3.0:
+                shape = 'Rectangle'
+
+            # if the extent is sufficiently small then we have L-piece
+            elif extent < 0.65:
+                shape = "L-Piece"
+
+            # if the solidity is sufficiently large then we have Z-piece
+            elif solidity > 0.80:
+                shape = "Z-Piece"
+
+            # draw the shape name on the image
+            cv2.putText(im, shape, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        (240, 0, 159), 2)
+
+            # show the contour properties
+            print "Contour #%d -- aspect_ratio=%.2f, extent=%.2f, solidity=%.2f" % (
+		        i + 1, aspectRatio, extent, solidity)
+
+            # show the output image
+            cv2.imshow("Convex hull", hullImage)
+            cv2.imshow("Image", im)
+            cv2.waitKey(0)
+
+
+

@@ -96,9 +96,11 @@ if __name__ == "__main__":
     '''
 
     # declare object, update path, call for different operations
-    imOpObj = ctr.Contour(CurrPath + "/week1a/images/image31.png")
+    imOpObj = ctr.Contour(CurrPath + "/week1a/images/image33.png")
     # imOpObj.ContourOp()
     # imOpObj.ContourMomentsAndArea()
     # imOpObj.ShapeIt()
     # imOpObj.ContourApprox()
-    imOpObj.ContourSorting()
+    # imOpObj.ContourSorting()
+    # imOpObj.ContourIdentifyTicTacToe()
+    imOpObj.ContourTetricBlock()
